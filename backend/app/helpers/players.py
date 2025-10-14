@@ -8,7 +8,6 @@ from app.models import Player, Shot, Pass, Turnover
 from django.db.models import Sum, Count, F
 
 def get_player_summary_stats(player_id: str):
-    # TODO: Complete API response, replace placeholder below with actual implementation that sources data from database
     player = Player.objects.get(player_id=player_id)
 
     shots = Shot.objects.filter(player=player)
@@ -25,7 +24,6 @@ def get_player_summary_stats(player_id: str):
 
     turnovers_count = turnovers.count()
 
-    # 可选：分类统计动作类型
     action_types = shots.values('action_type').annotate(count=Count('shot_id'))
     action_counts = {item['action_type']: item['count'] for item in action_types}
 
@@ -48,33 +46,24 @@ def get_player_summary_stats(player_id: str):
 
 
 def get_ranks(player_id: str, player_summary: dict):
-    # TODO: replace with your implementation of get_ranks
     player_id = int(player_id)
-
-    # 聚合所有玩家的 Shot
     shot_agg = Shot.objects.values('player_id').annotate(
         totalPoints=Sum('points'),
         totalShotAttempts=Count('shot_id')
     )
     shot_stats = {item['player_id']: item for item in shot_agg}
 
-    # 聚合 Pass
     pass_agg = Pass.objects.values('player_id').annotate(
         totalPasses=Count('pass_id'),
         totalPotentialAssists=Count('pass_id', filter=F('potential_assist'))
     )
     pass_stats = {item['player_id']: item for item in pass_agg}
-
-    # 聚合 Turnover
     turnover_agg = Turnover.objects.values('player_id').annotate(
         totalTurnovers=Count('turnover_id')
     )
     turnover_stats = {item['player_id']: item for item in turnover_agg}
-
-    # 所有 player_id
     all_player_ids = set(shot_stats.keys()) | set(pass_stats.keys()) | set(turnover_stats.keys())
 
-    # 排名函数
     def rank_field(field, stats_dict):
         sorted_list = sorted(
             [(pid, stats_dict.get(pid, {}).get(field, 0)) for pid in all_player_ids],
@@ -90,7 +79,6 @@ def get_ranks(player_id: str, player_summary: dict):
     totalPotentialAssistsRank = rank_field('totalPotentialAssists', pass_stats)
     totalTurnoversRank = rank_field('totalTurnovers', turnover_stats)
 
-    # 返回指定 player_id 的排名
     return {
         'totalPointsRank': totalPointsRank.get(player_id, 0),
         'totalShotAttemptsRank': totalShotAttemptsRank.get(player_id, 0),
