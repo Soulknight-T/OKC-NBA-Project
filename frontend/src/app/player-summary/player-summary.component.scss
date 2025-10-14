@@ -1,8 +1,63 @@
-player-summary-component {
-  .placeholder {
-    height: 600px;
+.player-summary-container {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+
+  .player-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .stats-actions {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 2rem;
+
+    .totals, .actions-count {
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 8px;
+      flex: 1;
+
+      h3 {
+        margin-top: 0;
+        font-size: 1.2rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.3rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0.5rem 0 0 0;
+
+        li {
+          margin-bottom: 0.3rem;
+        }
+      }
+    }
+  }
+
+  .ranks {
+    margin-top: 1.5rem;
+    background: #eef3f7;
+    padding: 1rem;
+    border-radius: 8px;
+
+    h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.3rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0 0;
+
+      li {
+        margin-bottom: 0.3rem;
+      }
+    }
   }
 }

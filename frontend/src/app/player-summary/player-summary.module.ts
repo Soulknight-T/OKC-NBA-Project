@@ -13,10 +13,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatOptionModule} from '@angular/material/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PlayersService} from 'app/_services/players.service';
+import { CourtVisualizationComponent } from './court-visualization/court-visualization.component';
 
 
 @NgModule({
-  declarations: [PlayerSummaryComponent],
+  declarations: [PlayerSummaryComponent, CourtVisualizationComponent],
   imports: [
     CommonModule,
     routing,

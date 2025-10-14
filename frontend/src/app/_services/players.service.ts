@@ -1,10 +1,10 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable, BehaviorSubject} from 'rxjs';
-import {map} from 'rxjs/operators';
-// import {plainToClass} from 'class-transformer';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import {BaseService} from './base.service';
+import { BaseService } from './base.service';
+import { PlayerSummaryResponse } from '../player-summary/player-summary.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +14,16 @@ export class PlayersService extends BaseService {
     super(http);
   }
 
-  getPlayerSummary(playerID: number): Observable<any> {
+  getPlayerSummary(playerID: number): Observable<{ endpoint: string; apiResponse: PlayerSummaryResponse }> {
     const endpoint = `${this.baseUrl}/playerSummary/${playerID}`;
 
-    return this.get(endpoint).pipe(map(
-      (data: Object) => {
-          return {
-            endpoint: endpoint,
-            apiResponse: data
-          };
-      },
-      error => {
-          return error;
-      }
-    ));
+    return this.get(endpoint).pipe(
+      map((data: PlayerSummaryResponse) => {
+        return {
+          endpoint: endpoint,
+          apiResponse: data
+        };
+      })
+    );
   }
 }

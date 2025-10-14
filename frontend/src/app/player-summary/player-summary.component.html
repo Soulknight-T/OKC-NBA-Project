@@ -1,1 +1,47 @@
-<div class="placeholder">Place your content here!</div>
+<div *ngIf="playerSummary as ps" class="player-summary-container">
+  <h2 class="player-name">{{ ps.player_name }} - {{ ps.team }}</h2>
+
+  <div class="stats-actions">
+    <div class="totals">
+      <h3>Season Totals</h3>
+      <ul>
+        <li>Total Points: {{ ps.totals.totalPoints }}</li>
+        <li>Total Shot Attempts: {{ ps.totals.totalShotAttempts }}</li>
+        <li>Shooting Fouls Drawn: {{ ps.totals.shootingFoulsDrawn }}</li>
+        <li>Total Passes: {{ ps.totals.totalPasses }}</li>
+        <li>Completed Passes: {{ ps.totals.completedPasses }}</li>
+        <li>Total Potential Assists: {{ ps.totals.totalPotentialAssists }}</li>
+        <li>Total Turnovers: {{ ps.totals.totalTurnovers }}</li>
+      </ul>
+    </div>
+
+    <div class="actions-count">
+      <h3>Action Counts</h3>
+      <ul>
+        <li>Pick & Roll: {{ ps.totals.pickAndRollCount }}</li>
+        <li>Isolation: {{ ps.totals.isolationCount }}</li>
+        <li>Post-up: {{ ps.totals.postUpCount }}</li>
+        <li>Off-Ball Screen: {{ ps.totals.offBallScreenCount }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ranks">
+    <h3>Season Rankings</h3>
+    <ul>
+      <li>Total Points Rank: {{ ps.ranks.totalPointsRank }}</li>
+      <li>Total Shot Attempts Rank: {{ ps.ranks.totalShotAttemptsRank }}</li>
+      <li>Total Passes Rank: {{ ps.ranks.totalPassesRank }}</li>
+      <li>Total Potential Assists Rank: {{ ps.ranks.totalPotentialAssistsRank }}</li>
+      <li>Total Turnovers Rank: {{ ps.ranks.totalTurnoversRank }}</li>
+    </ul>
+  </div>
+
+  <div class="court-visualization-wrapper" style="margin-top: 2rem;">
+    <app-court-visualization
+      [shots]="ps.shots"
+      [passes]="ps.passes"
+      [turnovers]="ps.turnovers">
+    </app-court-visualization>
+  </div>
+</div>
